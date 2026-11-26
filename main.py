@@ -17,6 +17,14 @@ def main():
     path = os.path.join(out_dir, "entry.txt")
     with open(path, "w", encoding="utf-8", newline="\n") as f:
         f.write(LINE)
+    # Runtime validation: re-read what was written and assert it is
+    # exactly one line of 1-200 characters before reporting success.
+    with open(path, "r", encoding="utf-8", newline="\n") as f:
+        written = f.read()
+    lines = written.split("\n")
+    assert len(lines) == 1 and 1 <= len(written) <= 200, (
+        "entry.txt must be a single line of 1-200 characters"
+    )
 
 
 if __name__ == "__main__":
